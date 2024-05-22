@@ -1,20 +1,20 @@
 module.exports = {
   entry: {
-    './dist/jsQR.js': './src/index.ts',
-    './docs/jsQR.js': './src/index.ts',
+    "./jsQR.js": "./src/index.ts",
+    "./docs/jsQR.js": "./src/index.ts",
   },
   output: {
-    filename: '[name]',
-    libraryTarget: 'umd',
+    filename: "[name]",
+    libraryTarget: "umd",
     libraryExport: "default",
     library: "jsQR",
+    globalObject: `typeof self !== 'undefined' ? self : this`,
   },
+  mode: "production",
   resolve: {
-    extensions: [".ts"]
+    extensions: [".ts"],
   },
   module: {
-    rules: [
-      { test: /\.ts$/, use: [{ loader: "awesome-typescript-loader" }] }
-    ]
-  }
-}
+    rules: [{ test: /\.ts$/, use: [{ loader: "ts-loader" }] }],
+  },
+};
