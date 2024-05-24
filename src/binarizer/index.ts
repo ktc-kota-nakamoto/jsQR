@@ -29,7 +29,7 @@ class Matrix {
 }
 
 export function binarize(data: Uint8ClampedArray, width: number, height: number, returnInverted: boolean,
-                         greyscaleWeights: GreyscaleWeights, canOverwriteImage: boolean) {
+                         greyscaleWeights: GreyscaleWeights, canOverwriteImage: boolean, blackBias: number) {
   const pixelCount = width * height;
   if (data.length !== pixelCount * 4) {
     throw new Error("Malformed data passed to binarizer.");
@@ -96,8 +96,6 @@ export function binarize(data: Uint8ClampedArray, width: number, height: number,
       let average = (min + max) / 2;
       // Small bias towards black by moving the threshold up. We do this, as in the finder patterns white holes tend
       // to appear which makes them undetectable.
-      // const blackBias = 1.11;
-      const blackBias = 0.55;
       average = Math.min(255, average * blackBias);
       if (max - min <= MIN_DYNAMIC_RANGE) {
         // If variation within the block is low, assume this is a block with only light or only

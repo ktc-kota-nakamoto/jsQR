@@ -2,7 +2,6 @@ import {binarize} from "./binarizer";
 import {BitMatrix} from "./BitMatrix";
 import {Chunks} from "./decoder/decodeData";
 import {decode} from "./decoder/decoder";
-import { Version } from "./decoder/version";
 import {extract} from "./extractor";
 import {locate, Point} from "./locator";
 
@@ -64,6 +63,7 @@ export interface Options {
   inversionAttempts?: "dontInvert" | "onlyInvert" | "attemptBoth" | "invertFirst";
   greyScaleWeights?: GreyscaleWeights;
   canOverwriteImage?: boolean;
+  blackBias?: number;
 }
 
 export interface GreyscaleWeights {
@@ -82,6 +82,7 @@ const defaultOptions: Options = {
     useIntegerApproximation: false,
   },
   canOverwriteImage: true,
+  blackBias: 1.11,
 };
 
 function mergeObject(target: any, src: any) {
@@ -98,7 +99,7 @@ function jsQR(data: Uint8ClampedArray, width: number, height: number, providedOp
   const tryInvertedFirst = options.inversionAttempts === "onlyInvert" || options.inversionAttempts === "invertFirst";
   const shouldInvert = options.inversionAttempts === "attemptBoth" || tryInvertedFirst;
   const {binarized, inverted} = binarize(data, width, height, shouldInvert, options.greyScaleWeights,
-      options.canOverwriteImage);
+      options.canOverwriteImage, options.blackBias);
   let result = scan(tryInvertedFirst ? inverted : binarized);
   if (!result && (options.inversionAttempts === "attemptBoth" || options.inversionAttempts === "invertFirst")) {
     result = scan(tryInvertedFirst ? binarized : inverted);

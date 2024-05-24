@@ -1,6 +1,6 @@
 import { BitMatrix } from "../BitMatrix";
 import { GreyscaleWeights } from "../index";
-export declare function binarize(data: Uint8ClampedArray, width: number, height: number, returnInverted: boolean, greyscaleWeights: GreyscaleWeights, canOverwriteImage: boolean): {
+export declare function binarize(data: Uint8ClampedArray, width: number, height: number, returnInverted: boolean, greyscaleWeights: GreyscaleWeights, canOverwriteImage: boolean, blackBias: number): {
     binarized: BitMatrix;
     inverted: BitMatrix;
 } | {

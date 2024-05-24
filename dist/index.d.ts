@@ -22,6 +22,7 @@ export interface Options {
     inversionAttempts?: "dontInvert" | "onlyInvert" | "attemptBoth" | "invertFirst";
     greyScaleWeights?: GreyscaleWeights;
     canOverwriteImage?: boolean;
+    blackBias?: number;
 }
 export interface GreyscaleWeights {
     red: number;
